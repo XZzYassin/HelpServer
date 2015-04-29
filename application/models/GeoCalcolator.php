@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class GeoCalcolator extends CI_Model
 {
-    public function getDistance($lat1, $lon1, $lat2, $lon2)
+    public function getDistance($lon1, $lat1, $lon2, $lat2)
     {
         $theta = $lon1 - $lon2;
         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +
