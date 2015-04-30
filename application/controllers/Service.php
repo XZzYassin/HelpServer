@@ -18,6 +18,11 @@ class Service extends CI_Controller
         $this->processData();
     }
 
+    public function set()
+    {
+        
+    }
+
     public function returnAjaxResult()
     {
         echo $this->ajaxRequest->getResult();
