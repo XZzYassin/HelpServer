@@ -10,8 +10,7 @@ class ServicesExecutor extends CI_Model
         $this->request = $request;
         $this->cleanAjaxRequest(); //$this->parameters is now clean for XSS and SQL-INJECTION
         
-        $this->executeService();
-        
+        $this->selectService();
 
         $CI = & get_instance();
         $CI->load->library('JsonFactory',NULL,'jf');
@@ -65,25 +64,33 @@ class ServicesExecutor extends CI_Model
         $this->request->setParameters($cleanParameters);
     }
 
-    private function executeService()
+    private function selectService()
     {
         $parameters = $this->request->getParameters();
         $service = NULL;
-        $this->load->model('ServiceCode','code');
         $result = NULL;
         $serviceName = explode("'",strtolower($parameters[0]));
         $serviceName = $serviceName[1];
-        switch($serviceName)
-        {
-            case "aroundhelps":
-                $this->request->type = $this->code->GET_HELPS_AROUND;
-                $this->load->model('HelpsAroundService','service');
-                $result = $this->service->execute($this->request);
-                break;
-
-            default:
-                die('Invalid Service :S');
-        }
+        require_once(APPPATH.'/models/services/ExecutableService.php');
+        
+        $this->config->load('ServicesConfig');
+        $serviceConfig = $this->config->item('ServicesConfig');
+        $serviceConfig = $serviceConfig[$serviceName];
+        $result = $this->executeService($serviceConfig['serviceID'],
+                                        $serviceConfig['serviceClass']);
+        
         $this->request->setResult($result);
+    }
+
+    private function executeService($code, $model)
+    {
+        $this->request->type = $code;
+        $this->load->model('Services/'.$model,'service');
+        return $this->executeExecutableService($this->service);
+    }
+
+    private function executeExecutableService(ExecutableService $executableService)
+    {
+        return $executableService->execute($this->request);
     }
 }
