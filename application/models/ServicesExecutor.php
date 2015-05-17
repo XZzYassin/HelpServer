@@ -58,7 +58,8 @@ class ServicesExecutor extends CI_Model
         $parameters = $this->request->getParameters();
         foreach($parameters as $value)
         {
-            $cleanParameter = $this->db->escape($this->security->xss_clean($value));
+            $cleanParameter = $value;
+            //$cleanParameter = $this->db->escape($this->security->xss_clean($value)); // This  line commented out because Codeigniter Query Builder (Active Record formerly) escapes input automatically
             array_push($cleanParameters,$cleanParameter);
         }
         $this->request->setParameters($cleanParameters);
@@ -69,8 +70,7 @@ class ServicesExecutor extends CI_Model
         $parameters = $this->request->getParameters();
         $service = NULL;
         $result = NULL;
-        $serviceName = explode("'",strtolower($parameters[0]));
-        $serviceName = $serviceName[1];
+        $serviceName = strtolower($parameters[0]);
         require_once(APPPATH.'/models/services/ExecutableService.php');
         
         $this->config->load('ServicesConfig');
