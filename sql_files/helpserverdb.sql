@@ -3,7 +3,6 @@
 -- Host: localhost    Database: helpserverdb
 -- ------------------------------------------------------
 -- Server version	5.1.72-community
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -54,8 +53,9 @@ CREATE TABLE `helps` (
   `time_created` varchar(50) DEFAULT NULL,
   `category` varchar(50) DEFAULT NULL,
   `status` int(10) DEFAULT NULL,
+  `descreption` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `helps` (
 
 LOCK TABLES `helps` WRITE;
 /*!40000 ALTER TABLE `helps` DISABLE KEYS */;
-INSERT INTO `helps` VALUES (1,'Feras',31.96747,35.91779,NULL,NULL,1),(2,'Madeineh circle',31.98566,35.89783,NULL,NULL,1),(3,'Home',31.97248,35.91751,NULL,NULL,2),(4,'Waha',31.99107,35.86838,NULL,NULL,1);
+INSERT INTO `helps` VALUES (1,'Feras',31.96747,35.91779,NULL,NULL,1,NULL),(2,'Madeineh circle',31.98566,35.89783,NULL,NULL,1,NULL),(3,'Home',31.97248,35.91751,NULL,NULL,2,NULL),(4,'Waha',31.99107,35.86838,NULL,NULL,1,NULL),(5,'bnana',31.97293,35.90967,'1431897433','fruits',0,NULL),(6,'bnana',31.97293,35.90967,'1431897516','fruits',1,NULL);
 /*!40000 ALTER TABLE `helps` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,6 +122,35 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'Yassin','Yassin.Mumen@gmail.com',NULL,NULL,NULL,NULL,NULL),(2,'lol','email@lol.net','pass','0780810603',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'helpserverdb'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `GetAroundHelps` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `GetAroundHelps`(IN x double, IN y double, IN maxDest double)
+BEGIN    
+    SELECT *
+    FROM `helps`
+    WHERE (DEGREES(ACOS(
+                SIN(RADIANS(y)) * SIN(RADIANS(`helps`.`latitude`)) +
+                COS(RADIANS(y)) * COS(RADIANS(`helps`.`latitude`)) * COS(RADIANS(x - `helps`.`logitude`))
+                ))* 60 * 1.1515 * 1.609344) <= maxDest
+                AND `status` = 1;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -132,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-30 23:32:02
+-- Dump completed on 2015-05-18 17:59:53
