@@ -11,6 +11,6 @@ class JsonFactory
                         'timeStamp'=>now());
         $data = array('result'=>$data);
         $result = array_merge($result,$data);
-        return json_encode($result);
+        return json_encode($result,JSON_NUMERIC_CHECK);
     }
 }
