@@ -12,6 +12,9 @@ $config['ServicesConfig'] = array(
     'requesthelp' => array('serviceID'  => 'REQUEST_HELP',
                            'serviceClass' => 'RequestHelpService'),
 
+    'accepthelp'  => array('serviceID'  => 'ACCEPT_HELP',
+                           'serviceClass' => 'AcceptHelpService'), 
+
     'approve'     => array('serviceID'  => 'APPROVE_HELP',
                            'serviceClass' => 'ApproveHelpService'),
 
