@@ -50,8 +50,8 @@ DROP TABLE IF EXISTS `helps`;
 CREATE TABLE `helps` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) DEFAULT NULL,
-  `logitude` double(10,5) DEFAULT NULL,
-  `latitude` double(10,5) DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `logitude` double DEFAULT NULL,
   `time_created` varchar(50) DEFAULT NULL,
   `category` varchar(50) DEFAULT NULL,
   `status` int(10) DEFAULT NULL,
@@ -166,4 +166,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-22 20:24:23
+-- Dump completed on 2015-05-23 15:45:27

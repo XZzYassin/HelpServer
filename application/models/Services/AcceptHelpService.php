@@ -10,22 +10,24 @@ class AcceptHelpService extends CI_Model implements ExecutableService
         if(is_array($params) &&  count($params) == $this->paramsRequired)
         {
             
-            $this->db->where(array(
-                                'help_id'  => $params[1]
-                            ));
-            $accepted = $this->db->update('asked_helps',array(
-                                                              'respondent_id' => $params[2]
-                                                        ));
             
             $this->db->where(array(
-                                'id'  => $params[1]
+                                'id'  => $params[1],
+                                'status' => 1
                             ));
 
             $accepted = $this->db->update('helps',array(
-                                                        'status' => 2
-                                                  ))
-                        && $accepted;
-
+                                                    'status' => 2
+                                                  ));
+            if($accepted)
+            {
+                $this->db->where(array(
+                                'help_id'  => $params[1]
+                            ));
+                $accepted = $this->db->update('asked_helps',array(
+                                                              'respondent_id' => $params[2]
+                                                        ));
+            }
             return array('done'=>$accepted);
         }
     }

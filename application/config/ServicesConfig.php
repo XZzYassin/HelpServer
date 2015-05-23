@@ -21,6 +21,9 @@ $config['ServicesConfig'] = array(
     'user'        => array('serviceID'  => 'GET_USER_INFO',
                            'serviceClass' => 'UserInfoService'),
 
+    'help'        => array('serviceID'  => 'GET_HELP_INFO',
+                           'serviceClass' => 'HelpInfoService'),
+
     'gcm'         => array('serviceID'  => 'REGISTER_GCM_ID',
                            'serviceClass' => 'RegisterAtGcmService'),
 );
