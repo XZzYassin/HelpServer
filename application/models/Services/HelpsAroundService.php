@@ -11,7 +11,7 @@ class HelpsAroundService extends CI_Model implements ExecutableService
         {
             $lon = $params[1];
             $lat = $params[2];
-            $query = $this->db->query('CALL `GetAroundHelps`(?,?,?)',array($lon,$lat,$this->config->item('geo_bounds')));
+            $query = $this->db->query('CALL `GetAroundHelps`(?,?,?)',array($lat,$lon,$this->config->item('geo_bounds')));
             $result = array();
             foreach($query->result() as $value)
             {

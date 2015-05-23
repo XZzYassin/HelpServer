@@ -12,8 +12,8 @@ class RequestHelpService extends CI_Model implements ExecutableService
             $this->load->helper('date');
             $created = $this->db->insert('helps',array(
                                                     'title'=>$params[1],
-                                                    'logitude'=>$params[2],
-                                                    'latitude'=>$params[3],
+                                                    'latitude'=>$params[2],
+                                                    'logitude'=>$params[3],
                                                     'time_created'=>now(),
                                                     'category'=>$params[4],
                                                     'description'=>$params[5],
